@@ -15,14 +15,14 @@ public class Person {
     private String name;
     private String geoData;
     private String brithday;
-    private int phoneNum;
-    private int faxNum;
+    private long phoneNum;
+    private long faxNum;
     private String emailAddr;
-    private int ssn; // Social Security number
-    private int mrn; //Medical record number
-    private int hpbn; //Health plan beneficiary number
-    private int ban; // Bank account number;
-    private int ln; //license number
+    private long ssn; // Social Security number
+    private long mrn; //Medical record number
+    private long hpbn; //Health plan beneficiary number
+    private long ban; // Bank account number;
+    private long ln; //license number
     private String vID; // Vehicle identifiers and serial numbers including license plates
     private String dID; // Device identifiers and serial numbers
     private String LinkedIn; // linkedin url
@@ -41,8 +41,6 @@ public class Person {
     public void setBrithday(String brithday) {
         this.brithday = brithday;
     }
-    
-    
     
     public File getPhoto() {
         return photo;
@@ -68,19 +66,19 @@ public class Person {
         this.geoData = geoData;
     }
 
-    public int getPhoneNum() {
+    public long getPhoneNum() {
         return phoneNum;
     }
 
-    public void setPhoneNum(int phoneNum) {
+    public void setPhoneNum(long phoneNum) {
         this.phoneNum = phoneNum;
     }
 
-    public int getFaxNum() {
+    public long getFaxNum() {
         return faxNum;
     }
 
-    public void setFaxNum(int faxNum) {
+    public void setFaxNum(long faxNum) {
         this.faxNum = faxNum;
     }
 
@@ -92,43 +90,43 @@ public class Person {
         this.emailAddr = emailAddr;
     }
 
-    public int getSsn() {
+    public long getSsn() {
         return ssn;
     }
 
-    public void setSsn(int ssn) {
+    public void setSsn(long ssn) {
         this.ssn = ssn;
     }
 
-    public int getMrn() {
+    public long getMrn() {
         return mrn;
     }
 
-    public void setMrn(int mrn) {
+    public void setMrn(long mrn) {
         this.mrn = mrn;
     }
 
-    public int getHpbn() {
+    public long getHpbn() {
         return hpbn;
     }
 
-    public void setHpbn(int hpbn) {
+    public void setHpbn(long hpbn) {
         this.hpbn = hpbn;
     }
 
-    public int getBan() {
+    public long getBan() {
         return ban;
     }
 
-    public void setBan(int ban) {
+    public void setBan(long ban) {
         this.ban = ban;
     }
 
-    public int getLn() {
+    public long getLn() {
         return ln;
     }
 
-    public void setLn(int ln) {
+    public void setLn(long ln) {
         this.ln = ln;
     }
 
@@ -163,7 +161,5 @@ public class Person {
     public void setIpa(String ipa) {
         this.ipa = ipa;
     }
-    
-    
-    
+   
 }

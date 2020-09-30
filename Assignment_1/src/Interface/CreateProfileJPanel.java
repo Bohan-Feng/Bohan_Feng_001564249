@@ -460,7 +460,7 @@ public class CreateProfileJPanel extends javax.swing.JPanel {
         // phone 
         boolean re = true;
         try{
-            this.person.setPhoneNum(Integer.parseInt(txtPhone.getText()));
+            this.person.setPhoneNum(new Long(txtPhone.getText()));
         }
         catch(NumberFormatException e)
         {
@@ -471,7 +471,7 @@ public class CreateProfileJPanel extends javax.swing.JPanel {
 
         // ln
         try{
-            this.person.setLn(Integer.parseInt(txtLn.getText()));
+            this.person.setLn(new Long(txtLn.getText()));
         }
         catch(NumberFormatException e)
         {
@@ -482,7 +482,7 @@ public class CreateProfileJPanel extends javax.swing.JPanel {
 
         // ban
         try{
-            this.person.setBan(Integer.parseInt(txtBan.getText()));
+            this.person.setBan(new Long(txtBan.getText()));
         }
         catch(NumberFormatException e)
         {
@@ -493,7 +493,7 @@ public class CreateProfileJPanel extends javax.swing.JPanel {
 
         // hbpn
         try{
-            this.person.setHpbn(Integer.parseInt(txtHpbn.getText()));
+            this.person.setHpbn(new Long(txtHpbn.getText()));
         }
         catch(NumberFormatException e)
         {
@@ -504,7 +504,7 @@ public class CreateProfileJPanel extends javax.swing.JPanel {
 
         // mrn
         try{
-            this.person.setMrn(Integer.parseInt(txtMrn.getText()));
+            this.person.setMrn(new Long(txtMrn.getText()));
         }
         catch(NumberFormatException e)
         {
@@ -515,7 +515,7 @@ public class CreateProfileJPanel extends javax.swing.JPanel {
 
         // ssn
         try{
-            this.person.setSsn(Integer.parseInt(txtSsn.getText()));
+            this.person.setSsn(new Long(txtSsn.getText()));
         }
         catch(NumberFormatException e)
         {
@@ -526,7 +526,7 @@ public class CreateProfileJPanel extends javax.swing.JPanel {
 
         // fax
         try{
-            this.person.setFaxNum(Integer.parseInt(txtFax.getText()));
+            this.person.setFaxNum(new Long(txtFax.getText()));
         }
         catch(NumberFormatException e)
         {
