@@ -6,8 +6,9 @@
 package Business;
 
 import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.*;
+import java.util.stream.*;
 
 /**
  *
@@ -93,33 +94,53 @@ public class CarList extends ArrayList<Car>{
     
     public Car getCarBySerialNum(String serial){
         
-        return new Car();
+        return (Car) this.stream()
+        .filter(c -> c.getSeriesNum().equals(serial))
+        .toArray()[0];
     }
     
     
     public CarList getCarsByModel(String model){
         
-        return new CarList();
+        return this.stream()
+        .filter(c -> c.getModel().equals(model))
+        .collect(Collectors
+        .toCollection(CarList::new));
     }
     
     public ArrayList<String> getAllMakers(){
         
-        return new ArrayList<String>();
+        return this.stream()
+        .map(Car::getMaker)
+        .distinct()
+        .collect(Collectors
+        .toCollection(ArrayList<String>::new));
     }
     
     public Date getLatestUpdate(){
         
-        return new Date();
+        ArrayList<Date> dates = this.stream()
+        .map(Car::getUpdateTime)
+        .collect(Collectors
+        .toCollection(ArrayList<Date>::new));
+
+        return Collections.max(dates);
     }
     
     public CarList getCarsByLocation(String location){
         
-        return new CarList();
+        return this.stream()
+        .filter(c -> c.getCity().equals(location))
+        .collect(Collectors
+        .toCollection(CarList::new)));
     }
     
     public CarList getExperiedCars(){
         
-        return new CarList();
+        return this.stream()
+        .filter(c -> c.getMaintanceExpiredDate().after(new Date()))
+        .collect(Collectors
+        .toCollection(CarList::new)));
     }
     
     
