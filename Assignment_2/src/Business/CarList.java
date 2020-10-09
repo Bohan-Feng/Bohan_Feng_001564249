@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Business;
 
 import java.util.*;
@@ -15,6 +10,47 @@ import java.util.stream.*;
 public class CarList extends ArrayList<Car>{
     
 
+    /**
+     * 
+     * @return the new car added to car list
+     */
+    public Car addCar(){
+        Car newCar = new Car();
+        this.add(newCar);
+        return newCar;
+    }
+    
+    /**
+     * update exist car with new car
+     * by serial num
+     * @param newCar the updated car obj 
+     */
+    public void updateCar(Car newCar){
+        ListIterator<Car> iterator = this.listIterator();
+        while(iterator.hasNext()){
+            Car next = iterator.next();
+            if(next.getSeriesNum().equals(newCar.getSeriesNum())){
+                iterator.set(newCar);
+                break;
+            }
+        }
+    }
+    
+    /**
+     * delete a car by serial number
+     * @param deletedCar the car obj need to be deleted
+     */
+    public void deleteCar(Car deletedCar){
+        ListIterator<Car> iterator = this.listIterator();
+        while(iterator.hasNext()){
+            Car next = iterator.next();
+            if(next.getSeriesNum().equals(deletedCar.getSeriesNum())){
+                iterator.remove();
+                break;
+            }
+        }
+    }
+    
     /**
      * 
      * @return the first avaliable car
@@ -35,8 +71,11 @@ public class CarList extends ArrayList<Car>{
      */
     
     public int getNumOfAvaliableCars(){
-        
-        return (int)(this.stream().filter(c -> c.isIsAvaliable()).count());
+        try{
+            return (int)(this.stream().filter(c -> c.isIsAvaliable()).count());
+        }catch(java.lang.NullPointerException e){}
+            
+        return 0;
     }
     
     /**
@@ -44,8 +83,11 @@ public class CarList extends ArrayList<Car>{
      * @return the number of unavaliable cars 
      */
     public int getNumOfUnavaliableCars(){
-        
-        return (int)this.stream().filter(c -> !c.isIsAvaliable()).count();        
+        try{
+            return (int)this.stream().filter(c -> !c.isIsAvaliable()).count();   
+        }catch(java.lang.NullPointerException e){
+            return 0;
+        }         
     }
     
     
@@ -95,10 +137,13 @@ public class CarList extends ArrayList<Car>{
      * @return
      */
     public Car getCarBySerialNum(String serial){
+        try{
+            return (Car) this.stream()
+            .filter(c -> c.getSeriesNum().equals(serial))
+            .toArray()[0];
+        }catch(java.lang.ArrayIndexOutOfBoundsException e) {}
         
-        return (Car) this.stream()
-        .filter(c -> c.getSeriesNum().equals(serial))
-        .toArray()[0];
+        return null;
     }
     
     /**
