@@ -170,8 +170,9 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
             return;
         }
         Customer c = (Customer)tableCustomers.getValueAt(row, 1);
-        boolean remove = system.getCustomerDirectory().remove(c);
-        if(remove){
+        boolean removeCustomer = system.getCustomerDirectory().remove(c);
+        boolean removeUserAccount = system.getUserAccountDirectory().removeAccount(c.getAccount());
+        if(removeCustomer && removeUserAccount){
             JOptionPane.showMessageDialog(null, "Customer " + c + " is removed");
             populateData();
         }else{
