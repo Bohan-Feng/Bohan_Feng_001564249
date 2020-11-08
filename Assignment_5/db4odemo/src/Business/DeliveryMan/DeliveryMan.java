@@ -5,6 +5,10 @@
  */
 package Business.DeliveryMan;
 
+import Business.IDgenerator;
+import Business.Order.Order;
+import Business.UserAccount.UserAccount;
+
 /**
  *
  * @author harold
@@ -18,16 +22,20 @@ public class DeliveryMan {
     private String firstName, lastName;
 
     private int orderSend;
+    
+     private UserAccount account;
 
     // constructors
     public DeliveryMan() {
-        this.ID = ++ManCount;
+        this.ID = IDgenerator.generateUniqueId();
+        orderSend = 0;
     }
 
-    public DeliveryMan(String fname, String lname) {
+    public DeliveryMan(String fname, String lname, UserAccount ua) {
         this();
         this.firstName = fname;
         this.lastName = lname;
+        this.account = ua;
     }
 
     // getter and setters
@@ -58,5 +66,25 @@ public class DeliveryMan {
     public void setOrderSend(int orderSend) {
         this.orderSend = orderSend;
     }
+    
+    public void completeOrder(Order o){
+        this.orderSend ++;
+        o.setStatus("Complete");
+    }
+
+    public UserAccount getAccount() {
+        return account;
+    }
+
+    public void setAccount(UserAccount account) {
+        this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        return firstName + " " + lastName;
+    }
+    
+    
 
 }
