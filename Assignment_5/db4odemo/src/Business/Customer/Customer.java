@@ -5,6 +5,8 @@
  */
 package Business.Customer;
 
+import Business.IDgenerator;
+import Business.DB4OUtil.DB4OUtil;
 import Business.UserAccount.UserAccount;
 
 /**
@@ -23,7 +25,7 @@ public class Customer {
 
     // constructors
     public Customer() {
-        this.ID = ++CustCount;
+        this.ID = IDgenerator.generateUniqueId();
     }
 
     public Customer(String fname, String lname, UserAccount useracc) {
