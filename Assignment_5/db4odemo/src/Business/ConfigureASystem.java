@@ -3,6 +3,7 @@ package Business;
 import Business.Customer.CustomerDirectory;
 import Business.DeliveryMan.DeliveryManDirectory;
 import Business.Employee.Employee;
+import Business.Order.OrderDirectory;
 import Business.Restaurant.RestaurantDirectory;
 import Business.Role.SystemAdminRole;
 import Business.UserAccount.UserAccount;
@@ -17,9 +18,10 @@ public class ConfigureASystem {
     public static EcoSystem configure(){
         
         EcoSystem system = EcoSystem.getInstance();
-        //system.setCustomerDirectory(new CustomerDirectory());
-        //system.setDeliveryManDirectory(new DeliveryManDirectory());
-        //system.setRestaurantDirectory(new RestaurantDirectory());
+        system.setCustomerDirectory(new CustomerDirectory());
+        system.setDeliveryManDirectory(new DeliveryManDirectory());
+        system.setRestaurantDirectory(new RestaurantDirectory());
+        system.setOrderDirectory(new OrderDirectory());
         
         //Create a network
         //create an enterprise
@@ -30,7 +32,7 @@ public class ConfigureASystem {
         
         Employee employee = system.getEmployeeDirectory().createEmployee("RRH");
         
-        //UserAccount ua = system.getUserAccountDirectory().createUserAccount("sysadmin", "sysadmin", employee, new SystemAdminRole());
+        UserAccount ua = system.getUserAccountDirectory().createUserAccount("sysadmin", "sysadmin", employee, new SystemAdminRole());
         
         return system;
     }

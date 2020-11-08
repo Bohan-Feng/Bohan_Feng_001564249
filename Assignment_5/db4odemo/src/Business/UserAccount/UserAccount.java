@@ -14,7 +14,7 @@ import Business.WorkQueue.WorkQueue;
  */
 public class UserAccount {
     
-    private String username;
+    private String username; // unique
     private String password;
     private Employee employee;
     private Role role;
@@ -23,7 +23,7 @@ public class UserAccount {
     public UserAccount() {
         workQueue = new WorkQueue();
     }
-
+        
     public String getUsername() {
         return username;
     }
