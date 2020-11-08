@@ -4,6 +4,9 @@
  */
 package Business.Employee;
 
+import Business.IDgenerator;
+import Business.DB4OUtil.DB4OUtil;
+
 /**
  *
  * @author raunak
@@ -12,10 +15,10 @@ public class Employee {
     
     private String name;
     private int id;
-    private static int count = 1;
+    private static int count = 0;
 
     public Employee() {
-        id = count;
+        id = IDgenerator.generateUniqueId();
         count++;
     }
 
