@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package userinterface.SystemAdminWorkArea;
+package userinterface.SystemAdminWorkArea.ManageDeliverMan;
 
+import userinterface.SystemAdminWorkArea.ManageCustomer.*;
 import Business.Customer.Customer;
+import Business.DeliveryMan.DeliveryMan;
 import Business.EcoSystem;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -15,9 +17,9 @@ import javax.swing.JPanel;
  *
  * @author Bohan Feng
  */
-public class ViewandUpdateCustomer extends javax.swing.JPanel {
+public class ViewandUpdateDeliveryMan extends javax.swing.JPanel {
 
-    private Customer customer;
+    private DeliveryMan deliverman;
     private JPanel container;
     private EcoSystem system;
     /**
@@ -26,19 +28,19 @@ public class ViewandUpdateCustomer extends javax.swing.JPanel {
      * @param ecosystem
      * @param cust
      */
-    public ViewandUpdateCustomer(JPanel userProcessContainer,EcoSystem ecosystem,Customer cust) {
+    public ViewandUpdateDeliveryMan(JPanel userProcessContainer,EcoSystem ecosystem,DeliveryMan dm) {
         initComponents();
         this.container = userProcessContainer;
         this.system = ecosystem;
-        this.customer = cust;
+        this.deliverman = dm;
         displayData();
     }
     
     private void displayData(){
-        this.txtUsername.setText(this.customer.getAccount().getUsername());
-        this.txtPassword.setText(this.customer.getAccount().getPassword());
-        this.fieldFname.setText(this.customer.getFirstName());
-        this.fieldLname.setText(this.customer.getLastName());
+        this.txtUsername.setText(this.deliverman.getAccount().getUsername());
+        this.txtPassword.setText(this.deliverman.getAccount().getPassword());
+        this.fieldFname.setText(this.deliverman.getFirstName());
+        this.fieldLname.setText(this.deliverman.getLastName());
     }
 
     /**
@@ -142,10 +144,10 @@ public class ViewandUpdateCustomer extends javax.swing.JPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         if(validateInput()){
-            this.customer.setFirstName(this.fieldFname.getText());
-            this.customer.setLastName(this.fieldLname.getText());
-            system.getCustomerDirectory().update(customer);
-            JOptionPane.showMessageDialog(null, "Customer " + customer + " updated !");
+            this.deliverman.setFirstName(this.fieldFname.getText());
+            this.deliverman.setLastName(this.fieldLname.getText());
+            system.getDeliveryManDirectory().update(deliverman);
+            JOptionPane.showMessageDialog(null, "Deliver man " + deliverman + " updated !");
             container.remove(this);
             CardLayout layout = (CardLayout) container.getLayout();
             layout.previous(container);

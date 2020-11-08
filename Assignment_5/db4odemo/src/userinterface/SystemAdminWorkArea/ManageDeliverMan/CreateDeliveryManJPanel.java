@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package userinterface.SystemAdminWorkArea;
+package userinterface.SystemAdminWorkArea.ManageDeliverMan;
 
+import userinterface.SystemAdminWorkArea.ManageCustomer.*;
 import Business.Customer.Customer;
+import Business.DeliveryMan.DeliveryMan;
 import Business.EcoSystem;
 import Business.Employee.Employee;
 import Business.Role.*;
@@ -18,7 +20,7 @@ import javax.swing.JPanel;
  *
  * @author Bohan Feng
  */
-public class CreateCustomerJPanel extends javax.swing.JPanel {
+public class CreateDeliveryManJPanel extends javax.swing.JPanel {
 
     
     private JPanel container;
@@ -28,7 +30,7 @@ public class CreateCustomerJPanel extends javax.swing.JPanel {
      * @param userProcessContainer
      * @param ecosystem
      */
-    public CreateCustomerJPanel(JPanel userProcessContainer,EcoSystem ecosystem) {
+    public CreateDeliveryManJPanel(JPanel userProcessContainer,EcoSystem ecosystem) {
         initComponents();
         this.container = userProcessContainer;
         this.system = ecosystem;
@@ -56,7 +58,7 @@ public class CreateCustomerJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Create Customer");
+        jLabel1.setText("Create Derivery Man");
 
         jLabel2.setText("User Name");
 
@@ -139,10 +141,10 @@ public class CreateCustomerJPanel extends javax.swing.JPanel {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         if(validateInput()){  
             Employee employee = system.getEmployeeDirectory().createEmployee(fieldFname.getText() + " "+ fieldLname.getText());        
-            UserAccount ua = system.getUserAccountDirectory().createUserAccount(fieldUserName.getText(), fieldPassword.getText(), employee, new CustomerRole());
-            Customer toAdd = new Customer(fieldFname.getText(), fieldLname.getText(), ua);
-            this.system.getCustomerDirectory().add(toAdd);
-            JOptionPane.showMessageDialog(null, "Customer " + toAdd + " Created !");
+            UserAccount ua = system.getUserAccountDirectory().createUserAccount(fieldUserName.getText(), fieldPassword.getText(), employee, new DeliverManRole());
+            DeliveryMan toAdd = new DeliveryMan(fieldFname.getText(), fieldLname.getText(), ua);
+            this.system.getDeliveryManDirectory().add(toAdd);
+            JOptionPane.showMessageDialog(null, "Delivery Man " + toAdd + " Created !");
             container.remove(this);
             CardLayout layout = (CardLayout) container.getLayout();
             layout.previous(container);

@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package userinterface.SystemAdminWorkArea;
+package userinterface.SystemAdminWorkArea.ManageDeliverMan;
 
+import userinterface.SystemAdminWorkArea.ManageCustomer.*;
 import Business.Customer.Customer;
+import Business.DeliveryMan.DeliveryMan;
 import Business.EcoSystem;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -16,18 +18,18 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Bohan Feng
  */
-public class ManageCustomerJPanel extends javax.swing.JPanel {
+public class ManageDeliverManJPanel extends javax.swing.JPanel {
 
     
     private JPanel container;
     private EcoSystem system;
     
     /**
-     * Creates new form ManageCustomerJPanel
+     * Creates new form ManageDeliverManJPanel
      * @param userProcessContainer
      * @param ecosystem
      */
-    public ManageCustomerJPanel(JPanel userProcessContainer,EcoSystem ecosystem) {
+    public ManageDeliverManJPanel(JPanel userProcessContainer,EcoSystem ecosystem) {
         initComponents();
         this.system = ecosystem;
         this.container = userProcessContainer;
@@ -35,12 +37,12 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
     }
     
     private void populateData(){
-        DefaultTableModel model = (DefaultTableModel)tableCustomers.getModel();
+        DefaultTableModel model = (DefaultTableModel)tableDerivery.getModel();
         model.setRowCount(0);
-        for(Customer c : system.getCustomerDirectory()){
+        for(DeliveryMan dm : system.getDeliveryManDirectory()){
             Object row[] = new Object[2];
-            row[0] = c.getID();
-            row[1] = c;
+            row[0] = dm.getID();
+            row[1] = dm;
             model.addRow(row);
         }
     }
@@ -55,7 +57,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableCustomers = new javax.swing.JTable();
+        tableDerivery = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
@@ -63,7 +65,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnRefreash = new javax.swing.JButton();
 
-        tableCustomers.setModel(new javax.swing.table.DefaultTableModel(
+        tableDerivery.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -71,7 +73,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
                 "ID", "Name"
             }
         ));
-        jScrollPane1.setViewportView(tableCustomers);
+        jScrollPane1.setViewportView(tableDerivery);
 
         btnBack.setText("<Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +104,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Manage All Customers");
+        jLabel1.setText("Manage All Delivery Men");
 
         btnRefreash.setText("Refreash");
         btnRefreash.addActionListener(new java.awt.event.ActionListener() {
@@ -157,38 +159,38 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRefreashActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        JPanel createPanel = new CreateCustomerJPanel(container, system);
-        container.add("createArea", createPanel);
+        JPanel createPanel = new CreateDeliveryManJPanel(container, system);
+        container.add("createDeliveryManArea", createPanel);
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        int row = tableCustomers.getSelectedRow();
+        int row = tableDerivery.getSelectedRow();
         if(row < 0){
             JOptionPane.showMessageDialog(null, "Please select a row!!", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Customer c = (Customer)tableCustomers.getValueAt(row, 1);
-        boolean removeCustomer = system.getCustomerDirectory().remove(c);
+        DeliveryMan c = (DeliveryMan)tableDerivery.getValueAt(row, 1);
+        boolean removeCustomer = system.getDeliveryManDirectory().remove(c);
         boolean removeUserAccount = system.getUserAccountDirectory().removeAccount(c.getAccount());
         if(removeCustomer && removeUserAccount){
-            JOptionPane.showMessageDialog(null, "Customer " + c + " is removed");
+            JOptionPane.showMessageDialog(null, "delivery man " + c + " is removed");
             populateData();
         }else{
-            JOptionPane.showMessageDialog(null, "cannot remove customer " + c + "");
+            JOptionPane.showMessageDialog(null, "cannot remove delivery man " + c + "");
         }
         
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        int row = tableCustomers.getSelectedRow();
+        int row = tableDerivery.getSelectedRow();
         if(row < 0){
             JOptionPane.showMessageDialog(null, "Please select a row!!", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Customer c = (Customer)tableCustomers.getValueAt(row, 1);
-        JPanel viewPanel = new ViewandUpdateCustomer(container,system,c);
+        DeliveryMan c = (DeliveryMan)tableDerivery.getValueAt(row, 1);
+        JPanel viewPanel = new ViewandUpdateDeliveryMan(container,system,c);
         container.add("updateArea", viewPanel);
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);
@@ -209,6 +211,6 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tableCustomers;
+    private javax.swing.JTable tableDerivery;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package userinterface.SystemAdminWorkArea;
+package userinterface.SystemAdminWorkArea.ManageRestaurant;
 
+import userinterface.SystemAdminWorkArea.ManageCustomer.*;
 import Business.Customer.Customer;
 import Business.EcoSystem;
+import Business.Restaurant.*;
+import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -16,18 +19,18 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Bohan Feng
  */
-public class ManageCustomerJPanel extends javax.swing.JPanel {
+public class ManageRestaurantJPanel extends javax.swing.JPanel {
 
     
     private JPanel container;
     private EcoSystem system;
     
     /**
-     * Creates new form ManageCustomerJPanel
+     * Creates new form ManageRestaurantJPanel
      * @param userProcessContainer
      * @param ecosystem
      */
-    public ManageCustomerJPanel(JPanel userProcessContainer,EcoSystem ecosystem) {
+    public ManageRestaurantJPanel(JPanel userProcessContainer,EcoSystem ecosystem) {
         initComponents();
         this.system = ecosystem;
         this.container = userProcessContainer;
@@ -35,12 +38,12 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
     }
     
     private void populateData(){
-        DefaultTableModel model = (DefaultTableModel)tableCustomers.getModel();
+        DefaultTableModel model = (DefaultTableModel)tableRestaurant.getModel();
         model.setRowCount(0);
-        for(Customer c : system.getCustomerDirectory()){
+        for(Restaurant r : system.getRestaurantDirectory()){
             Object row[] = new Object[2];
-            row[0] = c.getID();
-            row[1] = c;
+            row[0] = r.getID();
+            row[1] = r;
             model.addRow(row);
         }
     }
@@ -55,15 +58,15 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableCustomers = new javax.swing.JTable();
+        tableRestaurant = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
+        btnView = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnCreate = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnRefreash = new javax.swing.JButton();
 
-        tableCustomers.setModel(new javax.swing.table.DefaultTableModel(
+        tableRestaurant.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -71,7 +74,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
                 "ID", "Name"
             }
         ));
-        jScrollPane1.setViewportView(tableCustomers);
+        jScrollPane1.setViewportView(tableRestaurant);
 
         btnBack.setText("<Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -80,10 +83,10 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnUpdate.setText("Update");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+        btnView.setText("View");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
+                btnViewActionPerformed(evt);
             }
         });
 
@@ -102,7 +105,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Manage All Customers");
+        jLabel1.setText("Manage All Restaurant");
 
         btnRefreash.setText("Refreash");
         btnRefreash.addActionListener(new java.awt.event.ActionListener() {
@@ -128,7 +131,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(btnDelete)
                         .addGap(18, 18, 18)
-                        .addComponent(btnUpdate))
+                        .addComponent(btnView))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -145,7 +148,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
                     .addComponent(btnCreate)
-                    .addComponent(btnUpdate)
+                    .addComponent(btnView)
                     .addComponent(btnDelete)
                     .addComponent(btnRefreash))
                 .addContainerGap())
@@ -157,42 +160,45 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRefreashActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        JPanel createPanel = new CreateCustomerJPanel(container, system);
-        container.add("createArea", createPanel);
+        JPanel createPanel = new CreateRestaurantJPanel(container, system);
+        container.add("createRestaurnatArea", createPanel);
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        int row = tableCustomers.getSelectedRow();
+        int row = tableRestaurant.getSelectedRow();
         if(row < 0){
             JOptionPane.showMessageDialog(null, "Please select a row!!", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Customer c = (Customer)tableCustomers.getValueAt(row, 1);
-        boolean removeCustomer = system.getCustomerDirectory().remove(c);
-        boolean removeUserAccount = system.getUserAccountDirectory().removeAccount(c.getAccount());
+        Restaurant c = (Restaurant)tableRestaurant.getValueAt(row, 1);
+        boolean removeUserAccount = true;
+        for(UserAccount us : c.getAdmins()){
+            removeUserAccount &= system.getUserAccountDirectory().removeAccount(us);
+        }
+        boolean removeCustomer = system.getRestaurantDirectory().remove(c);
         if(removeCustomer && removeUserAccount){
-            JOptionPane.showMessageDialog(null, "Customer " + c + " is removed");
+            JOptionPane.showMessageDialog(null, "restaurant " + c + " is removed");
             populateData();
         }else{
-            JOptionPane.showMessageDialog(null, "cannot remove customer " + c + "");
+            JOptionPane.showMessageDialog(null, "cannot remove restaurant " + c + "");
         }
         
     }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        int row = tableCustomers.getSelectedRow();
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        int row = tableRestaurant.getSelectedRow();
         if(row < 0){
             JOptionPane.showMessageDialog(null, "Please select a row!!", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Customer c = (Customer)tableCustomers.getValueAt(row, 1);
-        JPanel viewPanel = new ViewandUpdateCustomer(container,system,c);
-        container.add("updateArea", viewPanel);
+        Restaurant c = (Restaurant)tableRestaurant.getValueAt(row, 1);
+        JPanel viewPanel = new ViewRestaurantJPanel(container,system,c);
+        container.add("viewRestaurantArea", viewPanel);
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);
-    }//GEN-LAST:event_btnUpdateActionPerformed
+    }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         container.remove(this);
@@ -206,9 +212,9 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnRefreash;
-    private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton btnView;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tableCustomers;
+    private javax.swing.JTable tableRestaurant;
     // End of variables declaration//GEN-END:variables
 }
